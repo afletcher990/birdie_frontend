@@ -1,5 +1,5 @@
 import { DateInfo, SET_DATE_INFO, SET_VIEW_DATE, ViewDateActionTypes } from '@App/store/types';
-import queryString from 'query-string';
+import qs from 'qs';
 import { history } from '@App/store';
 import moment from 'moment';
 
@@ -16,11 +16,11 @@ export function viewDateReducer(
 ): DateInfo {
     switch ( action.type ) {
         case SET_VIEW_DATE: {
-            const params = queryString.parse(history.location.search);
+            const params = qs.parse(history.location.search);
             params.date = moment(action.payload).format();
             history.push({
                 ...history.location,
-                search: `?${queryString.stringify(params)}`
+                search: `?${qs.stringify(params)}`
             });
             return {
                 validDates: state.validDates,

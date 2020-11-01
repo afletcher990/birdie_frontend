@@ -121,6 +121,8 @@ const mapStateToProps = (state: RootState, ownProps: DailyViewProps) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {};
+const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
+    return {};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DailyView);

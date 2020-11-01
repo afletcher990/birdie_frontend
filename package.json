@@ -1,12 +1,14 @@
 {
   "name": "front-end",
+  "homepage": "https://fletcherhome.net/birdie",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "@types/react-router-dom": "^5.1.6",
     "moment": "^2.29.1",
-    "query-string": "^6.13.6",
+    "qs": "^6.9.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.2.0",
@@ -14,6 +16,7 @@
     "react-scripts-redux-ts": "1.2.1",
     "react-tabs": "^3.1.1",
     "redux-saga": "^1.0.2",
+    "reactjs-popup": "^2.0.4",
     "styled-components": "^4.2.0"
   },
   "scripts": {
@@ -33,7 +36,9 @@
   "devDependencies": {
     "@types/history": "^4.7.2",
     "@types/jest": "^24.0.13",
+    "@types/material-ui": "^0.21.8",
     "@types/node": "^12.0.1",
+    "@types/qs": "^6.9.5",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",

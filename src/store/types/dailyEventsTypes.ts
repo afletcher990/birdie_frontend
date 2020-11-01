@@ -7,6 +7,12 @@ export interface CareEvent {
     timestamp: Date;
     event_type: string;
     payload: {
+        volume_ml: Number;
+        pad_condition: string;
+        meal: string;
+        observed: boolean;
+        consumed_volume_ml: Number;
+        fluid: string;
         note: string;
         mood: string;
         task_definition_description: string;

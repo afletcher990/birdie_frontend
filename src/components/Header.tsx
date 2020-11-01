@@ -3,12 +3,11 @@ import * as React from 'react';
 import { RootState } from '@App/store/reducers';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { CareRecipient } from '@App/store/types';
 
 interface HeaderProps {
-    careRecipientName?: string;
-}
-
-interface HeaderState {
+    currentCareRecipient?: CareRecipient;
+    careRecipients?: Array<CareRecipient>;
 }
 
 const HeaderContainer = styled.div`
@@ -20,30 +19,24 @@ const HeaderContainer = styled.div`
   color: #444444;
 `;
 
-class Header extends React.Component<HeaderProps, HeaderState> {
-    public constructor(props: HeaderProps) {
-        super(props);
-    }
-
-    public componentDidMount() {
-    }
-
-    public render() {
-        return (
-            <HeaderContainer>
-                <div>Care for {this.props.careRecipientName}
-                </div>
-            </HeaderContainer>
-        );
-    }
-}
+const Header = (props: HeaderProps) => {
+    return (
+        <HeaderContainer>
+            <div>Care for {props.currentCareRecipient!.name}
+            </div>
+        </HeaderContainer>
+    );
+};
 
 const mapStateToProps = (state: RootState, ownProps: HeaderProps) => {
     return {
-        careRecipientName: state.currentCareRecipient.name
+        currentCareRecipient: state.currentCareRecipient,
+        careRecipients: state.careRecipients
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {};
+const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
+    return {};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

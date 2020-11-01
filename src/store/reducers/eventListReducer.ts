@@ -2,7 +2,7 @@ import { CareEventActionTypes, SET_DAILY_EVENTS, CareEvent } from '@App/store/ty
 
 const initialState: Array<CareEvent> = [];
 
-export function careRecipientsReducer(
+export function eventListReducer(
     state: Array<CareEvent> = initialState,
     action: CareEventActionTypes
 ): Array<CareEvent> {

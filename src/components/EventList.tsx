@@ -33,8 +33,12 @@ const EventList = (props: EventListProps) => {
     );
 };
 
-const mapStateToProps = (state: RootState, ownProps: EventListProps) => {};
+const mapStateToProps = (state: RootState, ownProps: EventListProps) => {
+    return {};
+};
 
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {};
+const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
+    return {};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventList);

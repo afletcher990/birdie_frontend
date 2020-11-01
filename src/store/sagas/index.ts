@@ -9,7 +9,7 @@ import {
   CareRecipient, SET_VIEW_DATE
 } from '@App/store/types';
 import moment from 'moment';
-import queryString from 'query-string';
+import qs from 'qs';
 
 moment.defaultFormat = 'YYYY-MM-DD';
 
@@ -24,6 +24,8 @@ function* initSaga() {
 export default initSaga;
 
 export function* watchDateChangeAsync() {
+  yield takeEvery(SET_CURRENT_CARE_RECIPIENT, getDailyEvents);
+  yield takeEvery(SET_DATE_INFO, getDailyEvents);
   yield takeEvery(SET_VIEW_DATE, getDailyEvents);
 }
 
@@ -31,10 +33,12 @@ export function* getDailyEvents() {
   const state = yield select();
   const date = moment(state.dateInfo.viewDate).format();
   const careRecipientId = state.currentCareRecipient.care_recipient_id;
-  const response = yield call(fetch, config.url.API_URL +
-      `/getDailyEvents/?date=${date}&careRecipientId=${careRecipientId}`);
-  const events = yield call([response, response.json]);
-  yield put({type: SET_DAILY_EVENTS, payload: events});
+  if (date && careRecipientId) {
+    const response = yield call(fetch, config.url.API_URL +
+        `/getDailyEvents/?date=${date}&careRecipientId=${careRecipientId}`);
+    const events = yield call([response, response.json]);
+    yield put({type: SET_DAILY_EVENTS, payload: events});
+  }
 }
 
 export function* getValidDates() {
@@ -43,7 +47,7 @@ export function* getValidDates() {
   const dates = dateList.map((item: {date: string}) => {
     return new Date(item.date);
   });
-  const params = queryString.parse(history.location.search);
+  const params = qs.parse(history.location.search);
   let date: Date = dates[dates.length - 1];
   let found: boolean = false;
   if (params && params.date) {
@@ -59,7 +63,7 @@ export function* getValidDates() {
     params.date = moment(date).format();
     history.push({
       ...history.location,
-      search: `?${queryString.stringify(params)}`
+      search: `?${qs.stringify(params)}`
     });
   }
   yield put({type: SET_DATE_INFO, payload: {
@@ -71,7 +75,7 @@ export function* getCareRecipients() {
   const response = yield call(fetch, config.url.API_URL + '/getCareRecipients');
   const recipients = yield call([response, response.json]);
   yield put({type: SET_CARE_RECIPIENTS, payload: recipients});
-  const params = queryString.parse(history.location.search);
+  const params = qs.parse(history.location.search);
   let recipient: CareRecipient = recipients[0];
   let found: boolean = false;
   if (params && params.care_recipient_id) {
@@ -88,7 +92,7 @@ export function* getCareRecipients() {
     params.care_recipient_id = recipients[0].care_recipient_id;
     history.push({
       ...history.location,
-      search: `?${queryString.stringify(params)}`
+      search: `?${qs.stringify(params)}`
     });
   }
   yield put({type: SET_CURRENT_CARE_RECIPIENT, payload: recipient});

@@ -5,13 +5,9 @@ export interface CareRecipient {
     name: string;
 }
 
-export interface CareRecipients {
-    careRecipients: CareRecipient[];
-}
-
 interface SetCareRecipientsAction {
     type: typeof SET_CARE_RECIPIENTS;
-    payload: Array<CareRecipients>;
+    payload: Array<CareRecipient>;
 }
 
 export type CareRecipientActionTypes = SetCareRecipientsAction;

@@ -32,6 +32,7 @@ const TimeBox = styled.div`
     margin: 6px;
     padding: 6px;
     border-radius: 10px;
+    border-width: thin;
 `;
 
 const EventBox = styled.div`
@@ -41,6 +42,7 @@ const EventBox = styled.div`
     padding: 6px;
     width: 20rem;
     border-radius: 10px;
+    border-width: thin;
     text-align: start;
     
     @media(min-width: 768px) {
@@ -49,18 +51,46 @@ const EventBox = styled.div`
 `;
 
 const getEventDescription = (careEvent: CareEvent) => {
-    let eventDescription = getDisplayName(careEvent.event_type);
-    if (careEvent.event_type === 'check_in' || careEvent.event_type === 'check_out' ||
-        careEvent.event_type === 'visit_completed') {
-        eventDescription += ' (' + careEvent.caregiver_name + ')';
-    } else if (careEvent.event_type === 'task_completed') {
-        eventDescription = careEvent.payload.task_definition_description;
-    } else if (careEvent.event_type === 'mood_observation') {
-        eventDescription += ' (' + careEvent.payload.mood + ')';
-    } else if (careEvent.event_type === 'general_observation') {
-        eventDescription = careEvent.payload.note;
+    switch (careEvent.event_type) {
+        case 'check_in':
+        case 'check_out':
+        case 'visit_completed':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.caregiver_name})`;
+        case 'task_completed':
+            return careEvent.payload.task_definition_description;
+        case 'mood_observation':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.payload.mood})`;
+        case 'general_observation':
+            return careEvent.payload.note;
+        case 'general_observation':
+            return careEvent.payload.note;
+        case 'fluid_intake_observation':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.payload.fluid} 
+${careEvent.payload.consumed_volume_ml}ml - ${careEvent.payload.observed ? 'Observed' : 'Not Observed'})`;
+        case 'food_intake_observation':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.payload.meal} - ${careEvent.payload.note})`;
+        case 'incontinence_pad_observation':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.payload.pad_condition})`;
+        case 'catheter_observation':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.payload.volume_ml}ml - 
+${careEvent.payload.note})`;
+        case 'mental_health_observation':
+        case 'physical_health_observation':
+        case 'regular_medication_not_taken':
+            return `${getDisplayName(careEvent.event_type)} (${careEvent.payload.note})`;
+        case 'alert_raised':
+        case 'alert_qualified':
+        case 'medication_schedule_updated':
+        case 'regular_medication_maybe_taken':
+        case 'medication_schedule_created':
+        case 'regular_medication_partially_taken':
+        case 'toilet_visit_recorded':
+        case 'no_medication_observation_received':
+        case 'regular_medication_taken':
+        default:
+            return getDisplayName(careEvent.event_type);
     }
-    return eventDescription;
+    return '';
 };
 
 const EventItem = (props: EventItemProps) => {

@@ -1,12 +1,12 @@
 const prod = {
     url: {
-        API_URL: '/birdie'
+        API_URL: '/birdie_backend'
     }
 };
 
 const dev = {
     url: {
-        API_URL: 'http://localhost:8000'
+        API_URL: ''
     }
 };
 
