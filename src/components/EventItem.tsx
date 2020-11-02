@@ -93,11 +93,35 @@ ${careEvent.payload.note})`;
     return '';
 };
 
+const getStyle = (eventType: string) => {
+    switch (eventType) {
+        case 'check_in':
+            return {backgroundColor: 'lightGreen'};
+        case 'check_out':
+        case 'visit_completed':
+            return {backgroundColor: '#f5aeb3'};
+        case 'fluid_intake_observation':
+        case 'food_intake_observation':
+            return {backgroundColor: '#aedaf5'};
+        case 'incontinence_pad_observation':
+        case 'catheter_observation':
+        case 'toilet_visit_recorded':
+            return {backgroundColor: '#f5edae'};
+        case 'regular_medication_maybe_taken':
+        case 'medication_schedule_created':
+        case 'regular_medication_partially_taken':
+        case 'no_medication_observation_received':
+        case 'regular_medication_taken':
+            return {backgroundColor: '#f7b092'};
+        default: return {};
+    }
+};
+
 const EventItem = (props: EventItemProps) => {
     return (
         <EventItemContainer>
             <TimeBox>{moment(props.item.timestamp).format('HH:mm')}</TimeBox>
-            <EventBox>{getEventDescription(props.item)}</EventBox>
+            <EventBox style={getStyle(props.item.event_type)}>{getEventDescription(props.item)}</EventBox>
         </EventItemContainer>
     );
 };

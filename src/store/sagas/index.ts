@@ -47,7 +47,7 @@ export function* getValidDates() {
   const dates = dateList.map((item: {date: string}) => {
     return new Date(item.date);
   });
-  const params = qs.parse(history.location.search);
+  const params = qs.parse(history.location.search, {ignoreQueryPrefix: true});
   let date: Date = dates[dates.length - 1];
   let found: boolean = false;
   if (params && params.date) {
@@ -75,7 +75,7 @@ export function* getCareRecipients() {
   const response = yield call(fetch, config.url.API_URL + '/getCareRecipients');
   const recipients = yield call([response, response.json]);
   yield put({type: SET_CARE_RECIPIENTS, payload: recipients});
-  const params = qs.parse(history.location.search);
+  const params = qs.parse(history.location.search, {ignoreQueryPrefix: true});
   let recipient: CareRecipient = recipients[0];
   let found: boolean = false;
   if (params && params.care_recipient_id) {

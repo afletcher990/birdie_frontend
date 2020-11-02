@@ -16,11 +16,11 @@ export function viewDateReducer(
 ): DateInfo {
     switch ( action.type ) {
         case SET_VIEW_DATE: {
-            const params = qs.parse(history.location.search);
+            const params = qs.parse(history.location.search, {ignoreQueryPrefix: true});
             params.date = moment(action.payload).format();
             history.push({
                 ...history.location,
-                search: `?${qs.stringify(params)}`
+                search: `${qs.stringify(params)}`
             });
             return {
                 validDates: state.validDates,
