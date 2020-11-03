@@ -73,16 +73,16 @@ const DailyView = (props: DailyViewProps) => {
                     <Tab>Alerts</Tab>
                 </TabList>
                 <TabPanel>
-                    <EventList type="general" events={props.generalEvents}/>
+                    <EventList type="general" events={props.generalEvents || []}/>
                 </TabPanel>
                 <TabPanel>
-                    <EventList type="bodyInOut" events={props.bodyInOutEvents}/>
+                    <EventList type="bodyInOut" events={props.bodyInOutEvents || []}/>
                 </TabPanel>
                 <TabPanel>
-                    <EventList type="medical" events={props.medicalEvents}/>
+                    <EventList type="medical" events={props.medicalEvents || []}/>
                 </TabPanel>
                 <TabPanel>
-                    <EventList type="alert" events={props.alertEvents}/>
+                    <EventList type="alert" events={props.alertEvents || []}/>
                 </TabPanel>
             </Tabs>
         </DailyViewContainer>

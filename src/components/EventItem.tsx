@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import * as React from 'react';
-import { RootState } from '@App/store/reducers';
 import moment from 'moment';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { CareEvent } from '@App/store/types';
 
 interface EventItemProps {
@@ -126,12 +123,4 @@ const EventItem = (props: EventItemProps) => {
     );
 };
 
-const mapStateToProps = (state: RootState, ownProps: EventItemProps) => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
-    return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventItem);
+export default EventItem;

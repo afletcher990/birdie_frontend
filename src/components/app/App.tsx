@@ -43,14 +43,11 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
   }
 
-  public componentDidMount() {
-  }
-
     public render() {
     return (
       <>
         <GlobalStyle />
-        <Header/>
+        <Header />
         <AppContainer>
             <Router>
                 <Switch>
