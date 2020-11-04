@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Displays correct details 1`] = `
+<div
+  className="sc-bdVaJa uKaCG"
+>
+  <div
+    className="sc-bwzfXH fYfKuy"
+  >
+    07:34
+  </div>
+  <div
+    className="sc-htpNat jLzanf"
+    style={
+      Object {
+        "backgroundColor": "lightGreen",
+      }
+    }
+  >
+    Check in (Skyla Cresswell)
+  </div>
+</div>
+`;
+
+exports[`Displays fluid intake correct details 1`] = `
+<div
+  className="sc-bdVaJa uKaCG"
+>
+  <div
+    className="sc-bwzfXH fYfKuy"
+  >
+    08:21
+  </div>
+  <div
+    className="sc-htpNat jLzanf"
+    style={
+      Object {
+        "backgroundColor": "#aedaf5",
+      }
+    }
+  >
+    Fluid intake observation (regular 
+    0ml - Not Observed)
+  </div>
+</div>
+`;
