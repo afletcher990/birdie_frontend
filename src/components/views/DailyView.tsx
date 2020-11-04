@@ -7,13 +7,19 @@ import DateSelector from '@App/components/DateSelector';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import EventList from '@App/components/EventList';
-import { CareEvent } from '@App/store/types';
+import { CareEvent, SET_VIEW_DATE } from '@App/store/types';
+import moment from 'moment';
+
+moment.defaultFormat = 'YYYY-MM-DD';
 
 interface DailyViewProps {
     generalEvents?: Array<CareEvent>;
     bodyInOutEvents?: Array<CareEvent>;
     medicalEvents?: Array<CareEvent>;
     alertEvents?: Array<CareEvent>;
+    date?: string;
+    minDate?: string;
+    maxDate?: string;
 }
 
 const generalTypes = [
@@ -61,10 +67,21 @@ const DailyViewContainer = styled.div`
   margin: 0;
 `;
 
-const DailyView = (props: DailyViewProps) => {
+type Props = DailyViewProps & {
+    setDate: (date: Date) => void
+};
+
+const setDate = (date: Date) => ({ type: SET_VIEW_DATE, payload: date});
+
+const DailyView = (props: Props) => {
     return (
         <DailyViewContainer>
-            <DateSelector/>
+            <DateSelector
+                date={props.date || ''}
+                minDate={props.minDate || ''}
+                maxDate={props.maxDate || ''}
+                onDateChanged={(date: Date) => props.setDate(date)}
+            />
             <Tabs>
                 <TabList>
                     <Tab>General</Tab>
@@ -117,12 +134,17 @@ const mapStateToProps = (state: RootState, ownProps: DailyViewProps) => {
         generalEvents: generalEvents,
         bodyInOutEvents: bodyInOutEvents,
         medicalEvents: medicalEvents,
-        alertEvents: alertEvents
+        alertEvents: alertEvents,
+        date: moment(state.dateInfo.viewDate).format(),
+        minDate: moment(state.dateInfo.validDates[0]).format(),
+        maxDate: moment(state.dateInfo.validDates[state.dateInfo.validDates.length - 1]).format()
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
-    return {};
+    return {
+        setDate: (date: Date) => dispatch(setDate(date))
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DailyView);

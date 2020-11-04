@@ -25,6 +25,7 @@ export default initSaga;
 
 export function* watchDateChangeAsync() {
   yield takeEvery(SET_CURRENT_CARE_RECIPIENT, getDailyEvents);
+  yield takeEvery(SET_CARE_RECIPIENTS, getDailyEvents);
   yield takeEvery(SET_DATE_INFO, getDailyEvents);
   yield takeEvery(SET_VIEW_DATE, getDailyEvents);
 }
@@ -32,7 +33,7 @@ export function* watchDateChangeAsync() {
 export function* getDailyEvents() {
   const state = yield select();
   const date = moment(state.dateInfo.viewDate).format();
-  const careRecipientId = state.currentCareRecipient.care_recipient_id;
+  const careRecipientId = state.careRecipientInfo.currentCareRecipient.care_recipient_id;
   if (date && careRecipientId) {
     const response = yield call(fetch, config.url.API_URL +
         `/getDailyEvents/?date=${date}&careRecipientId=${careRecipientId}`);
@@ -74,7 +75,6 @@ export function* getValidDates() {
 export function* getCareRecipients() {
   const response = yield call(fetch, config.url.API_URL + '/getCareRecipients');
   const recipients = yield call([response, response.json]);
-  yield put({type: SET_CARE_RECIPIENTS, payload: recipients});
   const params = qs.parse(history.location.search, {ignoreQueryPrefix: true});
   let recipient: CareRecipient = recipients[0];
   let found: boolean = false;
@@ -95,5 +95,8 @@ export function* getCareRecipients() {
       search: `?${qs.stringify(params)}`
     });
   }
-  yield put({type: SET_CURRENT_CARE_RECIPIENT, payload: recipient});
+  yield put({type: SET_CARE_RECIPIENTS, careRecipientInfo: {
+      careRecipients: recipients,
+      currentCareRecipient: recipient
+    }});
 }

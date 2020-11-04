@@ -1,18 +1,34 @@
 import {
-    CareRecipient,
     CareRecipientActionTypes,
-    SET_CARE_RECIPIENTS
+    CareRecipientInfo,
+    SET_CARE_RECIPIENTS,
+    SET_CURRENT_CARE_RECIPIENT
 } from '@App/store/types';
 
-const initialState: Array<CareRecipient> = [];
+const initialState: CareRecipientInfo = {
+    careRecipients: [],
+    currentCareRecipient: {
+        care_recipient_id: '',
+        name: 'Pending...'
+    }
+};
 
 export function careRecipientsReducer(
-    state: Array<CareRecipient> = initialState,
+    state: CareRecipientInfo = initialState,
     action: CareRecipientActionTypes
-): Array<CareRecipient> {
+): CareRecipientInfo {
     switch ( action.type ) {
         case SET_CARE_RECIPIENTS: {
-            return action.payload;
+            return {
+                careRecipients: action.careRecipientInfo.careRecipients,
+                currentCareRecipient: action.careRecipientInfo.currentCareRecipient
+            };
+        }
+        case SET_CURRENT_CARE_RECIPIENT: {
+            return {
+                careRecipients: state.careRecipients,
+                currentCareRecipient: action.careRecipient
+            };
         }
         default: {
             return state;

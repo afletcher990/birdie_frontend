@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import * as React from 'react';
-import { RootState } from '@App/store/reducers';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { CareRecipient } from '@App/store/types';
 
 interface HeaderProps {
-    currentCareRecipient?: CareRecipient;
-    careRecipients?: Array<CareRecipient>;
+    careRecipientName: string;
 }
 
 const HeaderContainer = styled.div`
@@ -22,21 +17,10 @@ const HeaderContainer = styled.div`
 const Header = (props: HeaderProps) => {
     return (
         <HeaderContainer>
-            <div>Care for {props.currentCareRecipient!.name}
+            <div>Care for {props.careRecipientName}
             </div>
         </HeaderContainer>
     );
 };
 
-const mapStateToProps = (state: RootState, ownProps: HeaderProps) => {
-    return {
-        currentCareRecipient: state.currentCareRecipient,
-        careRecipients: state.careRecipients
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
-    return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

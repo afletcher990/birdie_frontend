@@ -13,6 +13,7 @@ import Header from '@App/components/Header.tsx';
 import DailyView from '@App/components/views/DailyView';
 
 interface AppProps {
+    appState?: RootState;
 }
 
 interface AppState {
@@ -47,7 +48,7 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <>
         <GlobalStyle />
-        <Header />
+        <Header careRecipientName={this.props.appState!.careRecipientInfo.currentCareRecipient.name}/>
         <AppContainer>
             <Router>
                 <Switch>
@@ -62,7 +63,9 @@ class App extends React.Component<AppProps, AppState> {
 }
 
 const mapStateToProps = (state: RootState, ownProps: AppProps) => {
-    return {};
+    return {
+        appState: state
+    };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
