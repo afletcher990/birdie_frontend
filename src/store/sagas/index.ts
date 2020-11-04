@@ -42,6 +42,9 @@ export function* getDailyEvents() {
   }
 }
 
+/*
+get the list of valid dates so that we can set limits on the date picker
+ */
 export function* getValidDates() {
   const response = yield call(fetch, config.url.API_URL + '/getDatesWithVisits');
   const dateList = yield call([response, response.json]);
